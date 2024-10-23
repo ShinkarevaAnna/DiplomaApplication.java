@@ -33,7 +33,7 @@ public class Customer {
     String name;
 
     @Column(name = "phone_number")
-    Long phoneNumber;
+    String phoneNumber;
 
     @Column(name = "email")
     String email;

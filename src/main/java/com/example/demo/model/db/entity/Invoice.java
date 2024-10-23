@@ -1,5 +1,7 @@
 package com.example.demo.model.db.entity;
 
+import com.example.demo.model.db.repository.InvoiceRepository;
+import com.example.demo.model.db.repository.ProjectRepository;
 import com.example.demo.model.enums.InvoiceStatus;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -47,6 +49,9 @@ public class Invoice {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     InvoiceStatus status;
+
+
+
 
 
 }

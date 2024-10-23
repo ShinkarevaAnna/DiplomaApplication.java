@@ -1,9 +1,11 @@
 package com.example.demo.service;
 
-import com.example.demo.model.db.entity.*;
-import com.example.demo.model.db.repository.ProjectRepository;
+import com.example.demo.model.db.entity.Customer;
+import com.example.demo.model.db.entity.Invoice;
+import com.example.demo.model.db.entity.Project;
+import com.example.demo.model.db.entity.User;
 import com.example.demo.model.dto.response.AssistantInfoResponse;
-import com.example.demo.model.dto.response.ProjectInfoResponse;
+import com.example.demo.model.dto.response.ReportFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +13,10 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -29,8 +31,9 @@ public class ExcelService {
     private final CustomerService customerService;
     private final UserService userService;
 
-    public void downloadProjectByIdAsExcel(Long id, HttpServletResponse response) throws IOException {
-        Project project = mapper.convertValue(projectsService.getProject(id), Project.class);
+    public ReportFile downloadProjectByIdAsExcel(Long id) throws IOException {
+        Project project = projectsService.getProjectById(id);
+
         Invoice invoice = mapper.convertValue(invoiceService.getProjectInvoice(id), Invoice.class);
         User user = project.getUser();
         List<AssistantInfoResponse> assistants = assistantService.getProjectAssistantsWithoutPagination(id);
@@ -63,65 +66,76 @@ public class ExcelService {
         row.createCell(20).setCellValue("email_Assistant");
         row.createCell(21).setCellValue("comment_Assistant");
 
-        Row dataRow = sheet.createRow(1);
-        dataRow.createCell(0).setCellValue(user.getFirstName());
-        dataRow.createCell(1).setCellValue(user.getLastName());
-        dataRow.createCell(2).setCellValue(user.getMiddleName());
-        dataRow.createCell(3).setCellValue(project.getName());
-        dataRow.createCell(4).setCellValue(project.getDateOfProjects());
-        dataRow.createCell(5).setCellValue(project.getObject());
-        dataRow.createCell(6).setCellValue(project.getComment());
-        dataRow.createCell(7).setCellValue(invoice.getProjectIncome());
-        dataRow.createCell(8).setCellValue(invoice.getReimbursableExpenses());
-        dataRow.createCell(9).setCellValue(invoice.getNonReimbursableExpenses());
-        dataRow.createCell(10).setCellValue(invoice.getAssistantsSalaries());
-        dataRow.createCell(11).setCellValue(invoice.getNetProfit());
-        dataRow.createCell(12).setCellValue(customer.getName());
-        dataRow.createCell(13).setCellValue(customer.getPhoneNumber());
-        dataRow.createCell(14).setCellValue(customer.getEmail());
-        dataRow.createCell(15).setCellValue(customer.getComment());
-        dataRow.createCell(16).setCellValue(assistants.get(0).getFirstName());
-        dataRow.createCell(17).setCellValue(assistants.get(0).getLastName());
-        dataRow.createCell(18).setCellValue(assistants.get(0).getMiddleName());
-        dataRow.createCell(19).setCellValue(assistants.get(0).getPhoneNumber());
-        dataRow.createCell(20).setCellValue(assistants.get(0).getEmail());
-        dataRow.createCell(21).setCellValue(assistants.get(0).getComment());
+if (assistants.size() >= 1) {
+    Row dataRow = sheet.createRow(1);
+    dataRow.createCell(0).setCellValue(user.getFirstName() != null ? user.getFirstName() : "null");
+    dataRow.createCell(1).setCellValue(user.getLastName() != null ? user.getLastName() : "null");
+    dataRow.createCell(2).setCellValue(user.getMiddleName() != null ? user.getMiddleName() : "null");
+    dataRow.createCell(3).setCellValue(project.getName() != null ? project.getName() : "null");
+    dataRow.createCell(4).setCellValue(project.getDateOfProjects());
+    dataRow.createCell(5).setCellValue(project.getObject() != null ? project.getObject() : "null");
+    dataRow.createCell(6).setCellValue(project.getComment() != null ? project.getComment() : "null");
+    dataRow.createCell(7).setCellValue(invoice.getProjectIncome() != null ? invoice.getProjectIncome() : 0);
+    dataRow.createCell(8).setCellValue(invoice.getReimbursableExpenses() != null ? invoice.getReimbursableExpenses() : 0);
+    dataRow.createCell(9).setCellValue(invoice.getNonReimbursableExpenses() != null ? invoice.getNonReimbursableExpenses() : 0);
+    dataRow.createCell(10).setCellValue(invoice.getAssistantsSalaries() != null ? invoice.getAssistantsSalaries() : 0);
+    dataRow.createCell(11).setCellValue(invoice.getNetProfit() != null ? invoice.getNetProfit() : 0);
+    dataRow.createCell(12).setCellValue(customer.getName() != null ? customer.getName() : "null");
+    dataRow.createCell(13).setCellValue(customer.getPhoneNumber() != null ? customer.getPhoneNumber() : "null");
+    dataRow.createCell(14).setCellValue(customer.getEmail() != null ? customer.getEmail() : "null");
+    dataRow.createCell(15).setCellValue(customer.getComment() != null ? customer.getComment() : "null");
+    dataRow.createCell(16).setCellValue(assistants.get(0).getFirstName() != null ? assistants.get(0).getFirstName() : "null");
+    dataRow.createCell(17).setCellValue(assistants.get(0).getLastName() != null ? assistants.get(0).getLastName() : "null");
+    dataRow.createCell(18).setCellValue(assistants.get(0).getMiddleName() != null ? assistants.get(0).getMiddleName() : "null");
+    dataRow.createCell(19).setCellValue(assistants.get(0).getPhoneNumber() != null ? assistants.get(0).getPhoneNumber() : 0);
+    dataRow.createCell(20).setCellValue(assistants.get(0).getEmail() != null ? assistants.get(0).getEmail() : "null");
+    dataRow.createCell(21).setCellValue(assistants.get(0).getComment() != null ? assistants.get(0).getComment() : "null");
+} else if (assistants.size() >= 2) {
 
-        Row dataRow1 = sheet.createRow(2);
-        dataRow1.createCell(16).setCellValue(assistants.get(1).getFirstName());
-        dataRow1.createCell(17).setCellValue(assistants.get(1).getLastName());
-        dataRow1.createCell(18).setCellValue(assistants.get(1).getMiddleName());
-        dataRow1.createCell(19).setCellValue(assistants.get(1).getPhoneNumber());
-        dataRow1.createCell(20).setCellValue(assistants.get(1).getEmail());
-        dataRow1.createCell(21).setCellValue(assistants.get(1).getComment());
+    Row dataRow1 = sheet.createRow(2);
+    dataRow1.createCell(16).setCellValue(assistants.get(1).getFirstName() != null ? assistants.get(1).getFirstName() : "null");
+    dataRow1.createCell(17).setCellValue(assistants.get(1).getLastName() != null ? assistants.get(1).getLastName() : "null");
+    dataRow1.createCell(18).setCellValue(assistants.get(1).getMiddleName() != null ? assistants.get(1).getMiddleName() : "null");
+    dataRow1.createCell(19).setCellValue(assistants.get(1).getPhoneNumber() != null ? assistants.get(1).getPhoneNumber() : 0);
+    dataRow1.createCell(20).setCellValue(assistants.get(1).getEmail() != null ? assistants.get(1).getEmail() : "null");
+    dataRow1.createCell(21).setCellValue(assistants.get(1).getComment() != null ? assistants.get(1).getComment() : "null");
+} else if (assistants.size() >=3) {
 
-        Row dataRow2 = sheet.createRow(3);
-        dataRow2.createCell(16).setCellValue(assistants.get(2).getFirstName());
-        dataRow2.createCell(17).setCellValue(assistants.get(2).getLastName());
-        dataRow2.createCell(18).setCellValue(assistants.get(2).getMiddleName());
-        dataRow2.createCell(19).setCellValue(assistants.get(2).getPhoneNumber());
-        dataRow2.createCell(20).setCellValue(assistants.get(2).getEmail());
-        dataRow2.createCell(21).setCellValue(assistants.get(2).getComment());
+    Row dataRow2 = sheet.createRow(3);
+    dataRow2.createCell(16).setCellValue(assistants.get(2).getFirstName() != null ? assistants.get(2).getFirstName() : "null");
+    dataRow2.createCell(17).setCellValue(assistants.get(2).getLastName() != null ? assistants.get(2).getLastName() : "null");
+    dataRow2.createCell(18).setCellValue(assistants.get(2).getMiddleName() != null ? assistants.get(2).getMiddleName() : "null");
+    dataRow2.createCell(19).setCellValue(assistants.get(2).getPhoneNumber() != null ? assistants.get(2).getPhoneNumber() : 0);
+    dataRow2.createCell(20).setCellValue(assistants.get(2).getEmail() != null ? assistants.get(2).getEmail() : "null");
+    dataRow2.createCell(21).setCellValue(assistants.get(2).getComment() != null ? assistants.get(2).getComment() : "null");
+} else if (assistants.size()>= 4) {
 
-        Row dataRow3 = sheet.createRow(4);
-        dataRow3.createCell(16).setCellValue(assistants.get(3).getFirstName());
-        dataRow3.createCell(17).setCellValue(assistants.get(3).getLastName());
-        dataRow3.createCell(18).setCellValue(assistants.get(3).getMiddleName());
-        dataRow3.createCell(19).setCellValue(assistants.get(3).getPhoneNumber());
-        dataRow3.createCell(20).setCellValue(assistants.get(3).getEmail());
-        dataRow3.createCell(21).setCellValue(assistants.get(3).getComment());
+    Row dataRow3 = sheet.createRow(4);
+    dataRow3.createCell(16).setCellValue(assistants.get(3).getFirstName() != null ? assistants.get(3).getFirstName() : "null");
+    dataRow3.createCell(17).setCellValue(assistants.get(3).getLastName() != null ? assistants.get(3).getLastName() : "null");
+    dataRow3.createCell(18).setCellValue(assistants.get(3).getMiddleName() != null ? assistants.get(3).getMiddleName() : "null");
+    dataRow3.createCell(19).setCellValue(assistants.get(3).getPhoneNumber() != null ? assistants.get(3).getPhoneNumber() : 0);
+    dataRow3.createCell(20).setCellValue(assistants.get(3).getEmail() != null ? assistants.get(3).getEmail() : "null");
+    dataRow3.createCell(21).setCellValue(assistants.get(3).getComment() != null ? assistants.get(3).getComment() : "null");
+} else if (assistants.size()>=5) {
 
-        Row dataRow4 = sheet.createRow(5);
-        dataRow4.createCell(16).setCellValue(assistants.get(4).getFirstName());
-        dataRow4.createCell(17).setCellValue(assistants.get(4).getLastName());
-        dataRow4.createCell(18).setCellValue(assistants.get(4).getMiddleName());
-        dataRow4.createCell(19).setCellValue(assistants.get(4).getPhoneNumber());
-        dataRow4.createCell(20).setCellValue(assistants.get(4).getEmail());
-        dataRow4.createCell(21).setCellValue(assistants.get(4).getComment());
-
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setHeader("Content-Disposition", "attachment; filename= project_" + project.getName() + ".xlsx");
-        workbook.write(response.getOutputStream());
-        workbook.close();
+    Row dataRow4 = sheet.createRow(5);
+    dataRow4.createCell(16).setCellValue(assistants.get(4).getFirstName() != null ? assistants.get(4).getFirstName() : "null");
+    dataRow4.createCell(17).setCellValue(assistants.get(4).getLastName() != null ? assistants.get(4).getLastName() : "null");
+    dataRow4.createCell(18).setCellValue(assistants.get(4).getMiddleName() != null ? assistants.get(4).getMiddleName() : "null");
+    dataRow4.createCell(19).setCellValue(assistants.get(4).getPhoneNumber() != null ? assistants.get(4).getPhoneNumber() : 0);
+    dataRow4.createCell(20).setCellValue(assistants.get(4).getEmail() != null ? assistants.get(4).getEmail() : "null");
+    dataRow4.createCell(21).setCellValue(assistants.get(4).getComment() != null ? assistants.get(4).getComment() : "null");
+}
+//        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+//        response.setHeader("Content-Disposition", "attachment; filename= project_" + project.getName() + ".xlsx");
+//        workbook.write(response.getOutputStream());
+//        workbook.close();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+       workbook.write(byteArrayOutputStream);
+        return ReportFile.builder()
+                .content(byteArrayOutputStream.toByteArray())
+                .fileName(project.getName())
+                .build();
     }
 }

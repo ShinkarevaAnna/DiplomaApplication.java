@@ -1,7 +1,16 @@
 package com.example.demo.model.db.entity;
 
 import com.example.demo.model.enums.ProjectsStatus;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +21,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,6 +30,8 @@ import java.util.List;
 @Entity
 @Table(name = "projects")
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityReference(alwaysAsId = true)
 public class Project {
 
     @Id
@@ -35,6 +47,8 @@ public class Project {
     LocalDateTime updateAt;
 
     @Column(name = "date_of_projects")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     LocalDate dateOfProjects;
 
     @Column(name = "object")
@@ -64,7 +78,6 @@ public class Project {
     Guest guest;
 
     @ManyToMany
-    @JsonManagedReference(value = "project-assistant")
     @JoinTable(name = "assistant_projects",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "assistant_id"))

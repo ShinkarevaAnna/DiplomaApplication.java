@@ -11,10 +11,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GuestInfoRequest {
-    LocalDateTime dateTime;
+
 }

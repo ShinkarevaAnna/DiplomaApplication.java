@@ -2,6 +2,9 @@ package com.example.demo.model.db.entity;
 
 import com.example.demo.model.enums.AssistantStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +14,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -18,6 +22,8 @@ import java.util.List;
 @Entity
 @Table(name = "assistants")
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityReference(alwaysAsId = true)
 public class Assistant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,7 +60,6 @@ public class Assistant {
     String comment;
 
     @ManyToMany(mappedBy = "assistants")
-    @JsonBackReference(value = "project-assistant")
     List<Project> projects;
 }
 

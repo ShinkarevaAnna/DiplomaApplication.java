@@ -13,11 +13,11 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CustomerInfoRequest {
     @NotEmpty
     String name;
-    Long phoneNumber;
+    String phoneNumber;
     String email;
     String comment;
 }

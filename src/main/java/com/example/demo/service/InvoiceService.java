@@ -101,4 +101,11 @@ public class InvoiceService {
         Project project = projectsService.getProjectById(projectId);
         return mapper.convertValue(getInvoiceFromDB(project.getInvoice().getId()), InvoiceInfoResponse.class);
     }
+
+    public void calculateNetProfit(Long id){
+        Invoice invoice = getInvoiceFromDB(id);
+        invoice.setNetProfit(invoice.getProjectIncome() - invoice.getAssistantsSalaries() - invoice.getNonReimbursableExpenses());
+        invoiceRepository.save(invoice);
+
+    }
 }

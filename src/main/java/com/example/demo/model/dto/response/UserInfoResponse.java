@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 @EqualsAndHashCode
 public class UserInfoResponse extends UserInfoRequest {
     Long id;

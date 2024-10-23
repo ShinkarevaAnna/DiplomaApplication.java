@@ -18,9 +18,11 @@ public class InvoiceInfoRequest {
     @NotNull
     Integer projectIncome;
     Integer reimbursableExpenses;
-    @NotNull
     Integer nonReimbursableExpenses;
-    @NotNull
     Integer assistantsSalaries;
-    Integer netProfit = projectIncome - nonReimbursableExpenses - assistantsSalaries;
+    Integer netProfit;
+
+//    public void setNetProfit(Integer projectIncome, Integer nonReimbursableExpenses, Integer assistantsSalaries) {
+//        this.netProfit = projectIncome - nonReimbursableExpenses - assistantsSalaries;
+//    }
 }

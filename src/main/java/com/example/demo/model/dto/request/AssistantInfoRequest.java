@@ -13,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AssistantInfoRequest {
 
     @NotEmpty
