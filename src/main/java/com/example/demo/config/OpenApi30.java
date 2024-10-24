@@ -11,13 +11,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(info = @Info(title = "ITMO", version = "1.0"))
 public class OpenApi30 {
-    @Bean
-    public GroupedOpenApi publicApi() {
-        return GroupedOpenApi.builder()
-                .group("public-api")
-                .pathsToMatch("/api/**")
-                .build();
-    }
+//    @Bean
+//    public GroupedOpenApi publicApi() {
+//        return GroupedOpenApi.builder()
+//                .group("public-api")
+//                .pathsToMatch("/api/**")
+//                .build();
+//    }
 
 //    @Bean
 //    public SwaggerUiConfigParameters swaggerUiConfigParameters() {

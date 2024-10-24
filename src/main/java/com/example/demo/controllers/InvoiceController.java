@@ -2,14 +2,12 @@ package com.example.demo.controllers;
 
 import com.example.demo.model.dto.request.InvoiceInfoRequest;
 import com.example.demo.model.dto.response.InvoiceInfoResponse;
-import com.example.demo.model.dto.response.ProjectInfoResponse;
 import com.example.demo.service.InvoiceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import static com.example.demo.constants.Constants.INVOICE;
