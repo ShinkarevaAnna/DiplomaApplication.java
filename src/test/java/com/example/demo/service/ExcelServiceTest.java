@@ -76,11 +76,11 @@ public class ExcelServiceTest {
         User user = new User();
         user.setId(1L);
         List<Assistant> assistants = List.of(assistant);
-        List<AssistantInfoResponse> assistantInfoResponse = new ArrayList<>();
-        for (Assistant as : assistants) {
-            AssistantInfoResponse infoResponse = mapper.convertValue(as, AssistantInfoResponse.class);
-            assistantInfoResponse.add(infoResponse);
-        }
+//        List<AssistantInfoResponse> assistantInfoResponse = new ArrayList<>();
+//        for (Assistant as : assistants) {
+//            AssistantInfoResponse infoResponse = mapper.convertValue(as, AssistantInfoResponse.class);
+//            assistantInfoResponse.add(infoResponse);
+//        }
         project.setAssistants(new ArrayList<>());
         project.getAssistants().add(assistant);
         project.setCustomer(customer);
@@ -90,8 +90,8 @@ public class ExcelServiceTest {
         customer.setPhoneNumber("+7924568954");
 
         when(projectsService.getProjectById(project.getId())).thenReturn(project);
-        when(mapper.convertValue(invoiceService.getProjectInvoice(invoice.getId()), Invoice.class)).thenReturn(invoice);
-        when(assistantService.getProjectAssistantsWithoutPagination(project.getId())).thenReturn(assistantInfoResponse);
+        when(mapper.convertValue(projectsService.getProjectInvoice(invoice.getId()), Invoice.class)).thenReturn(invoice);
+        when(assistantService.getProjectAssistantsWithoutPagination(project.getId())).thenReturn(assistants);
         when(mapper.convertValue(customerService.getCustomer(customer.getId()), Customer.class)).thenReturn(customer);
 
         ReportFile reportFile = excelService.downloadProjectByIdAsExcel(project.getId());

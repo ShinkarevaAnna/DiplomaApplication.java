@@ -1,9 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.model.db.entity.Customer;
-import com.example.demo.model.db.entity.Invoice;
-import com.example.demo.model.db.entity.Project;
-import com.example.demo.model.db.entity.User;
+import com.example.demo.model.db.entity.*;
 import com.example.demo.model.dto.response.AssistantInfoResponse;
 import com.example.demo.model.dto.response.ReportFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,9 +31,9 @@ public class ExcelService {
     public ReportFile downloadProjectByIdAsExcel(Long id) throws IOException {
         Project project = projectsService.getProjectById(id);
 
-        Invoice invoice = mapper.convertValue(invoiceService.getProjectInvoice(id), Invoice.class);
+        Invoice invoice = mapper.convertValue(projectsService.getProjectInvoice(id), Invoice.class);
         User user = project.getUser();
-        List<AssistantInfoResponse> assistants = assistantService.getProjectAssistantsWithoutPagination(id);
+        List<Assistant> assistants = assistantService.getProjectAssistantsWithoutPagination(id);
         Customer customer = project.getCustomer();
 
         Workbook workbook = new XSSFWorkbook();
@@ -87,7 +84,7 @@ if (assistants.size() >= 1) {
     dataRow.createCell(16).setCellValue(assistants.get(0).getFirstName() != null ? assistants.get(0).getFirstName() : "null");
     dataRow.createCell(17).setCellValue(assistants.get(0).getLastName() != null ? assistants.get(0).getLastName() : "null");
     dataRow.createCell(18).setCellValue(assistants.get(0).getMiddleName() != null ? assistants.get(0).getMiddleName() : "null");
-    dataRow.createCell(19).setCellValue(assistants.get(0).getPhoneNumber() != null ? assistants.get(0).getPhoneNumber() : 0);
+    dataRow.createCell(19).setCellValue(assistants.get(0).getPhoneNumber() != null ? assistants.get(0).getPhoneNumber() : "null");
     dataRow.createCell(20).setCellValue(assistants.get(0).getEmail() != null ? assistants.get(0).getEmail() : "null");
     dataRow.createCell(21).setCellValue(assistants.get(0).getComment() != null ? assistants.get(0).getComment() : "null");
 } else if (assistants.size() >= 2) {
@@ -96,7 +93,7 @@ if (assistants.size() >= 1) {
     dataRow1.createCell(16).setCellValue(assistants.get(1).getFirstName() != null ? assistants.get(1).getFirstName() : "null");
     dataRow1.createCell(17).setCellValue(assistants.get(1).getLastName() != null ? assistants.get(1).getLastName() : "null");
     dataRow1.createCell(18).setCellValue(assistants.get(1).getMiddleName() != null ? assistants.get(1).getMiddleName() : "null");
-    dataRow1.createCell(19).setCellValue(assistants.get(1).getPhoneNumber() != null ? assistants.get(1).getPhoneNumber() : 0);
+    dataRow1.createCell(19).setCellValue(assistants.get(1).getPhoneNumber() != null ? assistants.get(1).getPhoneNumber() :"null");
     dataRow1.createCell(20).setCellValue(assistants.get(1).getEmail() != null ? assistants.get(1).getEmail() : "null");
     dataRow1.createCell(21).setCellValue(assistants.get(1).getComment() != null ? assistants.get(1).getComment() : "null");
 } else if (assistants.size() >=3) {
@@ -105,7 +102,7 @@ if (assistants.size() >= 1) {
     dataRow2.createCell(16).setCellValue(assistants.get(2).getFirstName() != null ? assistants.get(2).getFirstName() : "null");
     dataRow2.createCell(17).setCellValue(assistants.get(2).getLastName() != null ? assistants.get(2).getLastName() : "null");
     dataRow2.createCell(18).setCellValue(assistants.get(2).getMiddleName() != null ? assistants.get(2).getMiddleName() : "null");
-    dataRow2.createCell(19).setCellValue(assistants.get(2).getPhoneNumber() != null ? assistants.get(2).getPhoneNumber() : 0);
+    dataRow2.createCell(19).setCellValue(assistants.get(2).getPhoneNumber() != null ? assistants.get(2).getPhoneNumber() :"null");
     dataRow2.createCell(20).setCellValue(assistants.get(2).getEmail() != null ? assistants.get(2).getEmail() : "null");
     dataRow2.createCell(21).setCellValue(assistants.get(2).getComment() != null ? assistants.get(2).getComment() : "null");
 } else if (assistants.size()>= 4) {
@@ -114,7 +111,7 @@ if (assistants.size() >= 1) {
     dataRow3.createCell(16).setCellValue(assistants.get(3).getFirstName() != null ? assistants.get(3).getFirstName() : "null");
     dataRow3.createCell(17).setCellValue(assistants.get(3).getLastName() != null ? assistants.get(3).getLastName() : "null");
     dataRow3.createCell(18).setCellValue(assistants.get(3).getMiddleName() != null ? assistants.get(3).getMiddleName() : "null");
-    dataRow3.createCell(19).setCellValue(assistants.get(3).getPhoneNumber() != null ? assistants.get(3).getPhoneNumber() : 0);
+    dataRow3.createCell(19).setCellValue(assistants.get(3).getPhoneNumber() != null ? assistants.get(3).getPhoneNumber() : "null");
     dataRow3.createCell(20).setCellValue(assistants.get(3).getEmail() != null ? assistants.get(3).getEmail() : "null");
     dataRow3.createCell(21).setCellValue(assistants.get(3).getComment() != null ? assistants.get(3).getComment() : "null");
 } else if (assistants.size()>=5) {
@@ -123,7 +120,7 @@ if (assistants.size() >= 1) {
     dataRow4.createCell(16).setCellValue(assistants.get(4).getFirstName() != null ? assistants.get(4).getFirstName() : "null");
     dataRow4.createCell(17).setCellValue(assistants.get(4).getLastName() != null ? assistants.get(4).getLastName() : "null");
     dataRow4.createCell(18).setCellValue(assistants.get(4).getMiddleName() != null ? assistants.get(4).getMiddleName() : "null");
-    dataRow4.createCell(19).setCellValue(assistants.get(4).getPhoneNumber() != null ? assistants.get(4).getPhoneNumber() : 0);
+    dataRow4.createCell(19).setCellValue(assistants.get(4).getPhoneNumber() != null ? assistants.get(4).getPhoneNumber() :"null");
     dataRow4.createCell(20).setCellValue(assistants.get(4).getEmail() != null ? assistants.get(4).getEmail() : "null");
     dataRow4.createCell(21).setCellValue(assistants.get(4).getComment() != null ? assistants.get(4).getComment() : "null");
 }

@@ -1,5 +1,6 @@
 package com.example.demo.model.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -20,6 +21,7 @@ public class InvoiceInfoRequest {
     Integer reimbursableExpenses;
     Integer nonReimbursableExpenses;
     Integer assistantsSalaries;
+    @JsonIgnore
     Integer netProfit;
 
 //    public void setNetProfit(Integer projectIncome, Integer nonReimbursableExpenses, Integer assistantsSalaries) {

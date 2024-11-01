@@ -46,18 +46,12 @@ public class InvoiceController {
     @GetMapping("/all")
     @Operation(summary = "Get invoice list")
     public Page<InvoiceInfoResponse> getAllInvoices(@RequestParam(defaultValue = "1") Integer page,
-                                                     @RequestParam(defaultValue = "10") Integer perPage,
-                                                     @RequestParam(defaultValue = "projectIncome") String sort,
-                                                     @RequestParam(defaultValue = "ASC") Sort.Direction order,
-                                                     @RequestParam(required = false) String filter
+                                                    @RequestParam(defaultValue = "10") Integer perPage,
+                                                    @RequestParam(defaultValue = "projectIncome") String sort,
+                                                    @RequestParam(defaultValue = "ASC") Sort.Direction order,
+                                                    @RequestParam(required = false) String filter
 
     ) {
         return invoiceService.getAllInvoices(page, perPage, sort, order, filter);
-    }
-
-    @GetMapping("/projectInvoice/{id}")
-    @Operation(summary = "get project invoice")
-    public InvoiceInfoResponse getProjectInvoice(@PathVariable Long id) {
-        return invoiceService.getProjectInvoice(id);
     }
 }

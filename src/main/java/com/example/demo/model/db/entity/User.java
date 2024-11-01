@@ -48,7 +48,7 @@ public class User {
     String middleName;
 
     @Column(name = "phone_number")
-    Long phoneNumber;
+    String phoneNumber;
 
     @Column(name = "email")
     String email;

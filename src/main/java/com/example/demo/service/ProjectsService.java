@@ -3,9 +3,7 @@ package com.example.demo.service;
 import com.example.demo.exceptions.CustomException;
 import com.example.demo.model.db.entity.*;
 import com.example.demo.model.db.repository.ProjectRepository;
-import com.example.demo.model.dto.request.ProjectInfoRequest;
-import com.example.demo.model.dto.request.ProjectToAssistantRequest;
-import com.example.demo.model.dto.response.AssistantInfoResponse;
+import com.example.demo.model.dto.request.*;
 import com.example.demo.model.dto.response.InvoiceInfoResponse;
 import com.example.demo.model.dto.response.ProjectInfoResponse;
 
@@ -23,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -95,36 +92,66 @@ public class ProjectsService {
 
         return new PageImpl<>(content, pageRequest, all.getTotalElements());
     }
-    @Transactional
-    public void addProjectToUser(Long projectId, Long userId) {
-        Project project = getProjectById(projectId);
-        User userFromDB = userService.getUserFromDB(userId);
-        project.setUser(userFromDB);
-        projectRepository.save(project);
+//    @Transactional
+//    public void addProjectToUser(Long projectId, Long userId) {
+//        Project project = getProjectById(projectId);
+//        User userFromDB = userService.getUserFromDB(userId);
+//        project.setUser(userFromDB);
+//        projectRepository.save(project);
+//
+//    }
+@Transactional
+public void addProjectToUser(ProjectToUserRequest request) {
+    Project project = getProjectById(request.getProjectId());
+    User userFromDB = userService.getUserFromDB(request.getUserId());
+    project.setUser(userFromDB);
+    projectRepository.save(project);
 
-    }
-    @Transactional
-    public void addProjectToCustomer(Long projectId, Long customerId) {
-        Project project = getProjectById(projectId);
-        Customer customerFromDB = customerService.getCustomerFromDB(customerId);
-        project.setCustomer(customerFromDB);
-        projectRepository.save(project);
-    }
-    @Transactional
-    public void addProjectToGuest(Long projectId, Long guestId) {
-        Project project = getProjectById(projectId);
-        Guest guestFromDB = guestService.getGuestFromDB(guestId);
-        project.setGuest(guestFromDB);
-        projectRepository.save(project);
-    }
-    @Transactional
-    public void addProjectToInvoice(Long projectId, Long invoiceId) {
-        Project project = getProjectById(projectId);
-        Invoice invoice = invoiceService.getInvoiceFromDB(invoiceId);
-        project.setInvoice(invoice);
-        projectRepository.save(project);
+}
 
-    }
+//    @Transactional
+//    public void addProjectToCustomer(Long projectId, Long customerId) {
+//        Project project = getProjectById(projectId);
+//        Customer customerFromDB = customerService.getCustomerFromDB(customerId);
+//        project.setCustomer(customerFromDB);
+//        projectRepository.save(project);
+//    }
+@Transactional
+public void addProjectToCustomer(ProjectToCustomerInfoRequest request) {
+    Project project = getProjectById(request.getProjectId());
+    Customer customerFromDB = customerService.getCustomerFromDB(request.getCustomerId());
+    project.setCustomer(customerFromDB);
+    projectRepository.save(project);
+}
+//    @Transactional
+//    public void addProjectToGuest(Long projectId, Long guestId) {
+//        Project project = getProjectById(projectId);
+//        Guest guestFromDB = guestService.getGuestFromDB(guestId);
+//        project.setGuest(guestFromDB);
+//        projectRepository.save(project);
+//    }
+@Transactional
+public void addProjectToGuest(ProjectToGuestInfoRequest request) {
+    Project project = getProjectById(request.getProjectId());
+    Guest guestFromDB = guestService.getGuestFromDB(request.getGuestId());
+    project.setGuest(guestFromDB);
+    projectRepository.save(project);
+}
+//    @Transactional
+//    public void addProjectToInvoice(Long projectId, Long invoiceId) {
+//        Project project = getProjectById(projectId);
+//        Invoice invoice = invoiceService.getInvoiceFromDB(invoiceId);
+//        project.setInvoice(invoice);
+//        projectRepository.save(project);
+
+//    }
+@Transactional
+    public void addProjectToInvoice(ProjectToInvoiceInfoRequest request) {
+    Project project = getProjectById(request.getProjectId());
+    Invoice invoice = invoiceService.getInvoiceFromDB(request.getInvoiceId());
+    project.setInvoice(invoice);
+    projectRepository.save(project);
+}
     @Transactional
     public void addProjectToAssistant(ProjectToAssistantRequest request) {
         Project project = getProjectById(request.getProjectId());
@@ -199,5 +226,9 @@ public class ProjectsService {
                 .collect(Collectors.toList());
 
         return new PageImpl<>(content, pageRequest, assistantProjects.getTotalElements());
+    }
+    public InvoiceInfoResponse getProjectInvoice(Long projectId) {
+        Project project = getProjectById(projectId);
+        return mapper.convertValue(invoiceService.getInvoiceFromDB(project.getInvoice().getId()), InvoiceInfoResponse.class);
     }
 }

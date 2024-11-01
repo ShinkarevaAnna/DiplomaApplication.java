@@ -2,8 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.db.entity.*;
 import com.example.demo.model.db.repository.ProjectRepository;
-import com.example.demo.model.dto.request.ProjectInfoRequest;
-import com.example.demo.model.dto.request.ProjectToAssistantRequest;
+import com.example.demo.model.dto.request.*;
 import com.example.demo.model.dto.response.ProjectInfoResponse;
 import com.example.demo.model.enums.ProjectsStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -131,9 +130,11 @@ public class ProjectsServiceTest {
         when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
         User user = new User();
         user.setId(1L);
-        project.setUser(user);
         when(userService.getUserFromDB(user.getId())).thenReturn(user);
-        projectsService.addProjectToUser(project.getId(), user.getId());
+        ProjectToUserRequest request = new ProjectToUserRequest();
+        request.setProjectId(project.getId());
+        request.setUserId(user.getId());
+        projectsService.addProjectToUser(request);
         verify(projectRepository, times(1)).save(any(Project.class));
         assertEquals(user.getId(), project.getUser().getId());
 
@@ -146,9 +147,11 @@ public class ProjectsServiceTest {
         when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
         Customer customer = new Customer();
         customer.setId(1L);
-        project.setCustomer(customer);
         when(customerService.getCustomerFromDB(customer.getId())).thenReturn(customer);
-        projectsService.addProjectToCustomer(project.getId(), customer.getId());
+        ProjectToCustomerInfoRequest request = new ProjectToCustomerInfoRequest();
+        request.setCustomerId(customer.getId());
+        request.setProjectId(project.getId());
+        projectsService.addProjectToCustomer(request);
         verify(projectRepository, times(1)).save(any(Project.class));
         assertEquals(customer.getId(), project.getCustomer().getId());
     }
@@ -160,9 +163,11 @@ public class ProjectsServiceTest {
         when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
         Guest guest = new Guest();
         guest.setId(1L);
-        project.setGuest(guest);
         when(guestService.getGuestFromDB(guest.getId())).thenReturn(guest);
-        projectsService.addProjectToGuest(project.getId(), guest.getId());
+        ProjectToGuestInfoRequest request = new ProjectToGuestInfoRequest();
+        request.setGuestId(guest.getId());
+        request.setProjectId(project.getId());
+        projectsService.addProjectToGuest(request);
         verify(projectRepository, times(1)).save(any(Project.class));
         assertEquals(guest.getId(), project.getGuest().getId());
     }
@@ -174,9 +179,11 @@ public class ProjectsServiceTest {
         when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
         Invoice invoice = new Invoice();
         invoice.setId(1L);
-        project.setInvoice(invoice);
         when(invoiceService.getInvoiceFromDB(invoice.getId())).thenReturn(invoice);
-        projectsService.addProjectToInvoice(project.getId(), invoice.getId());
+        ProjectToInvoiceInfoRequest request = new ProjectToInvoiceInfoRequest();
+        request.setProjectId(project.getId());
+        request.setInvoiceId(invoice.getId());
+        projectsService.addProjectToInvoice(request);
         verify(projectRepository, times(1)).save(any(Project.class));
         assertEquals(invoice.getId(), project.getInvoice().getId());
     }

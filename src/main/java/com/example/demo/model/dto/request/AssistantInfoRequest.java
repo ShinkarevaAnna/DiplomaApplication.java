@@ -20,7 +20,7 @@ public class AssistantInfoRequest {
     String firstName;
     String lastName;
     String middleName;
-    Long phoneNumber;
+    String phoneNumber;
     String email;
     String comment;
 }

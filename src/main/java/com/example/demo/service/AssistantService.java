@@ -114,7 +114,7 @@ public class AssistantService {
 
         return new PageImpl<>(content, pageRequest, projectAssistant.getTotalElements());
     }
-    public List<AssistantInfoResponse> getProjectAssistantsWithoutPagination(Long id){
+    public List<Assistant> getProjectAssistantsWithoutPagination(Long id){
         return assistantRepository.findAllProjectAssistantsWithoutPagination(id);
 
     }

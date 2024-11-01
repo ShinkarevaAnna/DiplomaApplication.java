@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class InvoiceService {
     private final ObjectMapper mapper;
     private final InvoiceRepository invoiceRepository;
-    ProjectsService projectsService;
+
 
     @Transactional
     public InvoiceInfoResponse createInvoice(InvoiceInfoRequest request) {
@@ -39,6 +39,7 @@ public class InvoiceService {
         invoice.setCreatedAt(LocalDateTime.now());
         invoice.setStatus(InvoiceStatus.CREATED);
         Invoice save = invoiceRepository.save(invoice);
+        calculateNetProfit(invoice.getId());
         return mapper.convertValue(save, InvoiceInfoResponse.class);
     }
 
@@ -97,10 +98,6 @@ public class InvoiceService {
         return new PageImpl<>(content, pageRequest, all.getTotalElements());
     }
 
-    public InvoiceInfoResponse getProjectInvoice(Long projectId) {
-        Project project = projectsService.getProjectById(projectId);
-        return mapper.convertValue(getInvoiceFromDB(project.getInvoice().getId()), InvoiceInfoResponse.class);
-    }
 
     public void calculateNetProfit(Long id){
         Invoice invoice = getInvoiceFromDB(id);

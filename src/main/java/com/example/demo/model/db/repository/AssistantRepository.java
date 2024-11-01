@@ -38,7 +38,6 @@ public interface AssistantRepository extends JpaRepository<Assistant, Long> {
     Page<Assistant> findAllProjectAssistantsByStatusNotFiltered(@Param("projectId") Long id, Pageable request, @Param("status") ProjectsStatus status, @Param("filter") String filter);
 
     @Query(nativeQuery = true, value = "SELECT * FROM assistants a JOIN assistant_projects ap ON a.id = ap.assistant_id " +
-            "JOIN projects p ON ap.project_id = p.id " +
-            "WHERE p.id = :projectId")
-    List<AssistantInfoResponse> findAllProjectAssistantsWithoutPagination(@Param("projectId") Long id);
+            "WHERE ap.project_id = :projectId")
+    List<Assistant> findAllProjectAssistantsWithoutPagination(@Param("projectId") Long id);
 }

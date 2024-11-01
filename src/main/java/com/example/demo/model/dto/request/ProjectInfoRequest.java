@@ -30,4 +30,5 @@ LocalDate dateOfProjects;
     @NotEmpty
 String object;
 String comment;
+String name;
 }

@@ -167,14 +167,14 @@ public class AssistantServiceTest {
         Project project = new Project();
         project.setId(1L);
         List<Assistant> assistants = List.of(assistant, assistant1);
-        List<AssistantInfoResponse> assistantInfoResponse = new ArrayList<>();
-        for (Assistant as : assistants) {
-            AssistantInfoResponse infoResponse = mapper.convertValue(as, AssistantInfoResponse.class);
-            assistantInfoResponse.add(infoResponse);
-        }
-        when(assistantRepository.findAllProjectAssistantsWithoutPagination(project.getId())).thenReturn(assistantInfoResponse);
+//        List<AssistantInfoResponse> assistantInfoResponse = new ArrayList<>();
+//        for (Assistant as : assistants) {
+//            AssistantInfoResponse infoResponse = mapper.convertValue(as, AssistantInfoResponse.class);
+//            assistantInfoResponse.add(infoResponse);
+//        }
+        when(assistantRepository.findAllProjectAssistantsWithoutPagination(project.getId())).thenReturn(assistants);
         project.setAssistants(assistants);
-        List<AssistantInfoResponse> result = assistantService.getProjectAssistantsWithoutPagination(project.getId());
+        List<Assistant> result = assistantService.getProjectAssistantsWithoutPagination(project.getId());
         assertEquals(2, result.size());
         assertEquals(assistant.getId(), result.get(0).getId());
         assertEquals("John", result.get(0).getFirstName());

@@ -1,7 +1,7 @@
 package com.example.demo.controllers;
 
-import com.example.demo.model.dto.request.ProjectInfoRequest;
-import com.example.demo.model.dto.request.ProjectToAssistantRequest;
+import com.example.demo.model.dto.request.*;
+import com.example.demo.model.dto.response.InvoiceInfoResponse;
 import com.example.demo.model.dto.response.ProjectInfoResponse;
 import com.example.demo.service.ProjectsService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,7 +50,7 @@ public class ProjectController {
     @Operation(summary = "Get project list")
     public Page<ProjectInfoResponse> getAllProjects(@RequestParam(defaultValue = "1") Integer page,
                                               @RequestParam(defaultValue = "10") Integer perPage,
-                                              @RequestParam(defaultValue = "lastName") String sort,
+                                              @RequestParam(defaultValue = "name") String sort,
                                               @RequestParam(defaultValue = "ASC") Sort.Direction order,
                                               @RequestParam(required = false) String filter
 
@@ -58,32 +58,42 @@ public class ProjectController {
         return projectsService.getAllProjects(page, perPage, sort, order, filter);
     }
 
-    @PostMapping("/projectToUser/{id}")
-    @Operation(summary = "Add project to user")
-    public void addProjectToUser(@PathVariable Long projectId, @PathVariable Long userId) {
-        projectsService.addProjectToUser(projectId, userId);
-    }
+//    @PostMapping("/projectToUser/{id}/{id}")
+//    @Operation(summary = "Add project to user")
+//    public void addProjectToUser( @PathVariable Long projectId,  @PathVariable Long userId) {
+//        projectsService.addProjectToUser(projectId, userId);
+//    }
+@PostMapping("/projectToUser")
+@Operation(summary = "Add project to user")
+public void addProjectToUser(@RequestBody ProjectToUserRequest request) {
+    projectsService.addProjectToUser(request);
+}
 
-    @PostMapping("/projectToAssistant/{id}")
+    @PostMapping("/projectToAssistant")
     @Operation(summary = "Add project to assistant")
     public void addProjectToAssistant(@RequestBody ProjectToAssistantRequest request){
         projectsService.addProjectToAssistant(request);
     }
-    @PostMapping("/projectToInvoice/{id}")
-    @Operation(summary = "Add project to invoice")
-    public void addProjectToInvoice(@PathVariable Long projectId, @PathVariable Long invoiceId) {
-        projectsService.addProjectToInvoice(projectId, invoiceId);
-    }
-    @PostMapping("/projectToGuest/{id}")
+//    @PostMapping("/projectToInvoice/{id}")
+//    @Operation(summary = "Add project to invoice")
+//    public void addProjectToInvoice(@PathVariable Long projectId, @PathVariable Long invoiceId) {
+//        projectsService.addProjectToInvoice(projectId, invoiceId);
+//    }
+@PostMapping("/projectToInvoice")
+@Operation(summary = "Add project to invoice")
+public void addProjectToInvoice(@RequestBody ProjectToInvoiceInfoRequest request) {
+    projectsService.addProjectToInvoice(request);
+}
+    @PostMapping("/projectToGuest")
     @Operation(summary = "Add project to guest")
-    public void addProjectToGuest(@PathVariable Long projectId, @PathVariable Long guestId){
-        projectsService.addProjectToGuest(projectId, guestId);
+    public void addProjectToGuest(@RequestBody ProjectToGuestInfoRequest request){
+        projectsService.addProjectToGuest(request);
     }
 
-    @PostMapping("/projectToCustomer/{id}")
+    @PostMapping("/projectToCustomer")
     @Operation(summary = "Add project to customer")
-    public  void addProjectToCustomer(@PathVariable Long projectId, @PathVariable Long customerId){
-        projectsService.addProjectToCustomer(projectId, customerId);
+    public  void addProjectToCustomer(@RequestBody ProjectToCustomerInfoRequest request){
+        projectsService.addProjectToCustomer(request);
     }
     @GetMapping("/guestProjects/{id}")
     @Operation(summary = "get guest projects")
@@ -136,5 +146,10 @@ public class ProjectController {
 
     ) {
         return projectsService.getAssistantProjects(id, page, perPage, sort, order, filter);
+    }
+    @GetMapping("/projectInvoice/{id}")
+    @Operation(summary = "get project invoice")
+    public InvoiceInfoResponse getProjectInvoice(@PathVariable Long id) {
+        return projectsService.getProjectInvoice(id);
     }
 }

@@ -26,5 +26,5 @@ public class UserInfoRequest {
     String firstName;
     String lastName;
     String middleName;
-    Long phoneNumber;
+    String phoneNumber;
 }
