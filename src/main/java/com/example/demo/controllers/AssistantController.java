@@ -60,7 +60,7 @@ public class AssistantController {
     public Page <AssistantInfoResponse> getProjectAssistants(@PathVariable Long id,
                                                              @RequestParam(defaultValue = "1") Integer page,
                                                              @RequestParam(defaultValue = "10") Integer perPage,
-                                                             @RequestParam(defaultValue = "lastName") String sort,
+                                                             @RequestParam(defaultValue = "last_name") String sort,
                                                              @RequestParam(defaultValue = "ASC") Sort.Direction order,
                                                              @RequestParam(required = false) String filter)
     {

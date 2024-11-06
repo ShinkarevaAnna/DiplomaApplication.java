@@ -142,7 +142,7 @@ public class AssistantServiceTest {
         project.setId(1L);
         List<Assistant> assistants = List.of(assistant, assistant1);
         Page<Assistant> assistantsPage = new PageImpl<>(assistants, pageRequest, assistants.size());
-        when(assistantRepository.findAllProjectAssistantsByStatusNot(project.getId(), pageRequest, ProjectsStatus.DELETED)).thenReturn(assistantsPage);
+        when(assistantRepository.findAllProjectAssistantsByStatusNot(project.getId(), pageRequest)).thenReturn(assistantsPage);
         project.setAssistants(assistants);
         Page<AssistantInfoResponse> result = assistantService.getProjectAssistants(project.getId(), 0, 10, "id", Sort.Direction.ASC, null);
         assertEquals(2, result.getTotalElements());

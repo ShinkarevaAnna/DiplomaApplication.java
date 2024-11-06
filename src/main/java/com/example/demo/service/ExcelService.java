@@ -63,7 +63,6 @@ public class ExcelService {
         row.createCell(20).setCellValue("email_Assistant");
         row.createCell(21).setCellValue("comment_Assistant");
 
-if (assistants.size() >= 1) {
     Row dataRow = sheet.createRow(1);
     dataRow.createCell(0).setCellValue(user.getFirstName() != null ? user.getFirstName() : "null");
     dataRow.createCell(1).setCellValue(user.getLastName() != null ? user.getLastName() : "null");
@@ -81,49 +80,50 @@ if (assistants.size() >= 1) {
     dataRow.createCell(13).setCellValue(customer.getPhoneNumber() != null ? customer.getPhoneNumber() : "null");
     dataRow.createCell(14).setCellValue(customer.getEmail() != null ? customer.getEmail() : "null");
     dataRow.createCell(15).setCellValue(customer.getComment() != null ? customer.getComment() : "null");
-    dataRow.createCell(16).setCellValue(assistants.get(0).getFirstName() != null ? assistants.get(0).getFirstName() : "null");
-    dataRow.createCell(17).setCellValue(assistants.get(0).getLastName() != null ? assistants.get(0).getLastName() : "null");
-    dataRow.createCell(18).setCellValue(assistants.get(0).getMiddleName() != null ? assistants.get(0).getMiddleName() : "null");
-    dataRow.createCell(19).setCellValue(assistants.get(0).getPhoneNumber() != null ? assistants.get(0).getPhoneNumber() : "null");
-    dataRow.createCell(20).setCellValue(assistants.get(0).getEmail() != null ? assistants.get(0).getEmail() : "null");
-    dataRow.createCell(21).setCellValue(assistants.get(0).getComment() != null ? assistants.get(0).getComment() : "null");
-} else if (assistants.size() >= 2) {
+    for (int i = 0; i<assistants.size(); i++) {
+        dataRow.createCell(16).setCellValue(assistants.get(i).getFirstName() != null ? assistants.get(i).getFirstName() : "null");
+        dataRow.createCell(17).setCellValue(assistants.get(i).getLastName() != null ? assistants.get(i).getLastName() : "null");
+        dataRow.createCell(18).setCellValue(assistants.get(i).getMiddleName() != null ? assistants.get(i).getMiddleName() : "null");
+        dataRow.createCell(19).setCellValue(assistants.get(i).getPhoneNumber() != null ? assistants.get(i).getPhoneNumber() : "null");
+        dataRow.createCell(20).setCellValue(assistants.get(i).getEmail() != null ? assistants.get(i).getEmail() : "null");
+        dataRow.createCell(21).setCellValue(assistants.get(i).getComment() != null ? assistants.get(i).getComment() : "null");
+        dataRow = sheet.createRow(i+2);
+    }
 
-    Row dataRow1 = sheet.createRow(2);
-    dataRow1.createCell(16).setCellValue(assistants.get(1).getFirstName() != null ? assistants.get(1).getFirstName() : "null");
-    dataRow1.createCell(17).setCellValue(assistants.get(1).getLastName() != null ? assistants.get(1).getLastName() : "null");
-    dataRow1.createCell(18).setCellValue(assistants.get(1).getMiddleName() != null ? assistants.get(1).getMiddleName() : "null");
-    dataRow1.createCell(19).setCellValue(assistants.get(1).getPhoneNumber() != null ? assistants.get(1).getPhoneNumber() :"null");
-    dataRow1.createCell(20).setCellValue(assistants.get(1).getEmail() != null ? assistants.get(1).getEmail() : "null");
-    dataRow1.createCell(21).setCellValue(assistants.get(1).getComment() != null ? assistants.get(1).getComment() : "null");
-} else if (assistants.size() >=3) {
+//    Row dataRow1 = sheet.createRow(2);
+//    dataRow1.createCell(16).setCellValue(assistants.get(1).getFirstName() != null ? assistants.get(1).getFirstName() : "null");
+//    dataRow1.createCell(17).setCellValue(assistants.get(1).getLastName() != null ? assistants.get(1).getLastName() : "null");
+//    dataRow1.createCell(18).setCellValue(assistants.get(1).getMiddleName() != null ? assistants.get(1).getMiddleName() : "null");
+//    dataRow1.createCell(19).setCellValue(assistants.get(1).getPhoneNumber() != null ? assistants.get(1).getPhoneNumber() :"null");
+//    dataRow1.createCell(20).setCellValue(assistants.get(1).getEmail() != null ? assistants.get(1).getEmail() : "null");
+//    dataRow1.createCell(21).setCellValue(assistants.get(1).getComment() != null ? assistants.get(1).getComment() : "null");
+//
+//
+//    Row dataRow2 = sheet.createRow(3);
+//    dataRow2.createCell(16).setCellValue(assistants.get(2).getFirstName() != null ? assistants.get(2).getFirstName() : "null");
+//    dataRow2.createCell(17).setCellValue(assistants.get(2).getLastName() != null ? assistants.get(2).getLastName() : "null");
+//    dataRow2.createCell(18).setCellValue(assistants.get(2).getMiddleName() != null ? assistants.get(2).getMiddleName() : "null");
+//    dataRow2.createCell(19).setCellValue(assistants.get(2).getPhoneNumber() != null ? assistants.get(2).getPhoneNumber() :"null");
+//    dataRow2.createCell(20).setCellValue(assistants.get(2).getEmail() != null ? assistants.get(2).getEmail() : "null");
+//    dataRow2.createCell(21).setCellValue(assistants.get(2).getComment() != null ? assistants.get(2).getComment() : "null");
+//
+//    Row dataRow3 = sheet.createRow(4);
+//    dataRow3.createCell(16).setCellValue(assistants.get(3).getFirstName() != null ? assistants.get(3).getFirstName() : "null");
+//    dataRow3.createCell(17).setCellValue(assistants.get(3).getLastName() != null ? assistants.get(3).getLastName() : "null");
+//    dataRow3.createCell(18).setCellValue(assistants.get(3).getMiddleName() != null ? assistants.get(3).getMiddleName() : "null");
+//    dataRow3.createCell(19).setCellValue(assistants.get(3).getPhoneNumber() != null ? assistants.get(3).getPhoneNumber() : "null");
+//    dataRow3.createCell(20).setCellValue(assistants.get(3).getEmail() != null ? assistants.get(3).getEmail() : "null");
+//    dataRow3.createCell(21).setCellValue(assistants.get(3).getComment() != null ? assistants.get(3).getComment() : "null");
+//
+//
+//    Row dataRow4 = sheet.createRow(5);
+//    dataRow4.createCell(16).setCellValue(assistants.get(4).getFirstName() != null ? assistants.get(4).getFirstName() : "null");
+//    dataRow4.createCell(17).setCellValue(assistants.get(4).getLastName() != null ? assistants.get(4).getLastName() : "null");
+//    dataRow4.createCell(18).setCellValue(assistants.get(4).getMiddleName() != null ? assistants.get(4).getMiddleName() : "null");
+//    dataRow4.createCell(19).setCellValue(assistants.get(4).getPhoneNumber() != null ? assistants.get(4).getPhoneNumber() :"null");
+//    dataRow4.createCell(20).setCellValue(assistants.get(4).getEmail() != null ? assistants.get(4).getEmail() : "null");
+//    dataRow4.createCell(21).setCellValue(assistants.get(4).getComment() != null ? assistants.get(4).getComment() : "null");
 
-    Row dataRow2 = sheet.createRow(3);
-    dataRow2.createCell(16).setCellValue(assistants.get(2).getFirstName() != null ? assistants.get(2).getFirstName() : "null");
-    dataRow2.createCell(17).setCellValue(assistants.get(2).getLastName() != null ? assistants.get(2).getLastName() : "null");
-    dataRow2.createCell(18).setCellValue(assistants.get(2).getMiddleName() != null ? assistants.get(2).getMiddleName() : "null");
-    dataRow2.createCell(19).setCellValue(assistants.get(2).getPhoneNumber() != null ? assistants.get(2).getPhoneNumber() :"null");
-    dataRow2.createCell(20).setCellValue(assistants.get(2).getEmail() != null ? assistants.get(2).getEmail() : "null");
-    dataRow2.createCell(21).setCellValue(assistants.get(2).getComment() != null ? assistants.get(2).getComment() : "null");
-} else if (assistants.size()>= 4) {
-
-    Row dataRow3 = sheet.createRow(4);
-    dataRow3.createCell(16).setCellValue(assistants.get(3).getFirstName() != null ? assistants.get(3).getFirstName() : "null");
-    dataRow3.createCell(17).setCellValue(assistants.get(3).getLastName() != null ? assistants.get(3).getLastName() : "null");
-    dataRow3.createCell(18).setCellValue(assistants.get(3).getMiddleName() != null ? assistants.get(3).getMiddleName() : "null");
-    dataRow3.createCell(19).setCellValue(assistants.get(3).getPhoneNumber() != null ? assistants.get(3).getPhoneNumber() : "null");
-    dataRow3.createCell(20).setCellValue(assistants.get(3).getEmail() != null ? assistants.get(3).getEmail() : "null");
-    dataRow3.createCell(21).setCellValue(assistants.get(3).getComment() != null ? assistants.get(3).getComment() : "null");
-} else if (assistants.size()>=5) {
-
-    Row dataRow4 = sheet.createRow(5);
-    dataRow4.createCell(16).setCellValue(assistants.get(4).getFirstName() != null ? assistants.get(4).getFirstName() : "null");
-    dataRow4.createCell(17).setCellValue(assistants.get(4).getLastName() != null ? assistants.get(4).getLastName() : "null");
-    dataRow4.createCell(18).setCellValue(assistants.get(4).getMiddleName() != null ? assistants.get(4).getMiddleName() : "null");
-    dataRow4.createCell(19).setCellValue(assistants.get(4).getPhoneNumber() != null ? assistants.get(4).getPhoneNumber() :"null");
-    dataRow4.createCell(20).setCellValue(assistants.get(4).getEmail() != null ? assistants.get(4).getEmail() : "null");
-    dataRow4.createCell(21).setCellValue(assistants.get(4).getComment() != null ? assistants.get(4).getComment() : "null");
-}
 //        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 //        response.setHeader("Content-Disposition", "attachment; filename= project_" + project.getName() + ".xlsx");
 //        workbook.write(response.getOutputStream());

@@ -25,17 +25,17 @@ public interface AssistantRepository extends JpaRepository<Assistant, Long> {
     Page<Assistant> findAllByStatusNotFiltered(Pageable request, AssistantStatus status, @Param("filter") String filter);
 
     @Query(nativeQuery = true, value = "SELECT * FROM assistants a JOIN assistant_projects ap ON a.id = ap.assistant_id " +
-            "JOIN projects p ON ap.project_id = p.id " +
-            "WHERE p.id = :projectId AND p.status <> :status ")
-    Page<Assistant> findAllProjectAssistantsByStatusNot(@Param("projectId") Long id, Pageable request, @Param("status") ProjectsStatus status);
+            "WHERE ap.project_id = :projectId ")
+    Page<Assistant> findAllProjectAssistantsByStatusNot(@Param("projectId") Long id, Pageable request);
 
     @Query(nativeQuery = true, value = "SELECT * FROM assistants a JOIN assistant_projects ap ON a.id = ap.assistant_id " +
-            "JOIN projects p ON ap.project_id = p.id " +
-            "WHERE p.id = :projectId AND p.status <> :status AND " +
-            "(UPPER(cast(a.name as VARCHAR)) LIKE CONCAT('%', UPPER(:filter), '%') OR " +
+//            "JOIN projects p ON ap.project_id = p.id " +
+            "WHERE ap.project_id = :projectId  " +
+            "(UPPER(cast(a.last_name as VARCHAR)) LIKE CONCAT('%', UPPER(:filter), '%') OR " +
             "UPPER(p.date_of_projects) LIKE CONCAT('%', UPPER(:filter), '%') OR " +
             "UPPER(p.object) LIKE CONCAT('%', UPPER(:filter), '%'))")
-    Page<Assistant> findAllProjectAssistantsByStatusNotFiltered(@Param("projectId") Long id, Pageable request, @Param("status") ProjectsStatus status, @Param("filter") String filter);
+    Page<Assistant> findAllProjectAssistantsByStatusNotFiltered(@Param("projectId") Long id, Pageable request, @Param("filter") String filter);
+
 
     @Query(nativeQuery = true, value = "SELECT * FROM assistants a JOIN assistant_projects ap ON a.id = ap.assistant_id " +
             "WHERE ap.project_id = :projectId")

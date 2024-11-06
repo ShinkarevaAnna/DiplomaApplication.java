@@ -103,9 +103,9 @@ public class AssistantService {
         Pageable pageRequest = PaginationUtil.getPageRequest(page, perPage, sort, order);
         Page<Assistant> projectAssistant;
         if (filter == null) {
-            projectAssistant = assistantRepository.findAllProjectAssistantsByStatusNot(id, pageRequest, ProjectsStatus.DELETED);
+            projectAssistant = assistantRepository.findAllProjectAssistantsByStatusNot(id, pageRequest);
         } else {
-            projectAssistant = assistantRepository.findAllProjectAssistantsByStatusNotFiltered(id, pageRequest, ProjectsStatus.DELETED, filter.toLowerCase());
+            projectAssistant = assistantRepository.findAllProjectAssistantsByStatusNotFiltered(id, pageRequest, filter.toLowerCase());
         }
 
         List<AssistantInfoResponse> content = projectAssistant.getContent().stream()
