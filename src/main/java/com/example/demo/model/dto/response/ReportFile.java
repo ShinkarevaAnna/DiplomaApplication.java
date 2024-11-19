@@ -7,14 +7,7 @@ import lombok.Data;
 @Builder
 public class ReportFile {
 
-    /**
-     * Содержимое отчета
-     */
     private byte[] content;
-
-    /**
-     * Имя файла
-     */
     private String fileName;
 
 }

@@ -19,7 +19,7 @@ public class PaginationUtil {
 
         if (order == null || sort == null) {
             return PageRequest.of(page, perPage);
-        } else if (order.equals(Sort.Direction.DESC)){
+        } else if (order.equals(Sort.Direction.DESC)) {
             return PageRequest.of(page, perPage, Sort.by(Sort.Direction.DESC, sort));
         } else {
             return PageRequest.of(page, perPage, Sort.by(Sort.Direction.ASC, sort));

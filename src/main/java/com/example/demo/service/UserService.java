@@ -60,6 +60,7 @@ public class UserService {
     public User getUserFromDB(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new CustomException("User not found", HttpStatus.NOT_FOUND));
     }
+
     @Transactional
     public UserInfoResponse updateUser(Long id, UserInfoRequest request) {
         validateEmail(request);
@@ -83,6 +84,7 @@ public class UserService {
 
         return mapper.convertValue(save, UserInfoResponse.class);
     }
+
     @Transactional
     public void deleteUser(Long id) {
         User user = getUserFromDB(id);

@@ -49,60 +49,63 @@ public class ProjectController {
     @GetMapping("/all")
     @Operation(summary = "Get project list")
     public Page<ProjectInfoResponse> getAllProjects(@RequestParam(defaultValue = "1") Integer page,
-                                              @RequestParam(defaultValue = "10") Integer perPage,
-                                              @RequestParam(defaultValue = "name") String sort,
-                                              @RequestParam(defaultValue = "ASC") Sort.Direction order,
-                                              @RequestParam(required = false) String filter
+                                                    @RequestParam(defaultValue = "10") Integer perPage,
+                                                    @RequestParam(defaultValue = "name") String sort,
+                                                    @RequestParam(defaultValue = "ASC") Sort.Direction order,
+                                                    @RequestParam(required = false) String filter
 
     ) {
         return projectsService.getAllProjects(page, perPage, sort, order, filter);
     }
 
-//    @PostMapping("/projectToUser/{id}/{id}")
+    //    @PostMapping("/projectToUser/{id}/{id}")
 //    @Operation(summary = "Add project to user")
 //    public void addProjectToUser( @PathVariable Long projectId,  @PathVariable Long userId) {
 //        projectsService.addProjectToUser(projectId, userId);
 //    }
-@PostMapping("/projectToUser")
-@Operation(summary = "Add project to user")
-public void addProjectToUser(@RequestBody ProjectToUserRequest request) {
-    projectsService.addProjectToUser(request);
-}
+    @PostMapping("/projectToUser")
+    @Operation(summary = "Add project to user")
+    public void addProjectToUser(@RequestBody ProjectToUserRequest request) {
+        projectsService.addProjectToUser(request);
+    }
 
     @PostMapping("/projectToAssistant")
     @Operation(summary = "Add project to assistant")
-    public void addProjectToAssistant(@RequestBody ProjectToAssistantRequest request){
+    public void addProjectToAssistant(@RequestBody ProjectToAssistantRequest request) {
         projectsService.addProjectToAssistant(request);
     }
-//    @PostMapping("/projectToInvoice/{id}")
+
+    //    @PostMapping("/projectToInvoice/{id}")
 //    @Operation(summary = "Add project to invoice")
 //    public void addProjectToInvoice(@PathVariable Long projectId, @PathVariable Long invoiceId) {
 //        projectsService.addProjectToInvoice(projectId, invoiceId);
 //    }
-@PostMapping("/projectToInvoice")
-@Operation(summary = "Add project to invoice")
-public void addProjectToInvoice(@RequestBody ProjectToInvoiceInfoRequest request) {
-    projectsService.addProjectToInvoice(request);
-}
+    @PostMapping("/projectToInvoice")
+    @Operation(summary = "Add project to invoice")
+    public void addProjectToInvoice(@RequestBody ProjectToInvoiceInfoRequest request) {
+        projectsService.addProjectToInvoice(request);
+    }
+
     @PostMapping("/projectToGuest")
     @Operation(summary = "Add project to guest")
-    public void addProjectToGuest(@RequestBody ProjectToGuestInfoRequest request){
+    public void addProjectToGuest(@RequestBody ProjectToGuestInfoRequest request) {
         projectsService.addProjectToGuest(request);
     }
 
     @PostMapping("/projectToCustomer")
     @Operation(summary = "Add project to customer")
-    public  void addProjectToCustomer(@RequestBody ProjectToCustomerInfoRequest request){
+    public void addProjectToCustomer(@RequestBody ProjectToCustomerInfoRequest request) {
         projectsService.addProjectToCustomer(request);
     }
+
     @GetMapping("/guestProjects/{id}")
     @Operation(summary = "get guest projects")
     public Page<ProjectInfoResponse> getGuestProjects(@PathVariable Long id,
-                                                     @RequestParam(defaultValue = "1") Integer page,
-                                                     @RequestParam(defaultValue = "20") Integer perPage,
-                                                     @RequestParam(defaultValue = "dateOfProjects") String sort,
-                                                     @RequestParam(defaultValue = "ASC") Sort.Direction order,
-                                                     @RequestParam(required = false) String filter
+                                                      @RequestParam(defaultValue = "1") Integer page,
+                                                      @RequestParam(defaultValue = "20") Integer perPage,
+                                                      @RequestParam(defaultValue = "dateOfProjects") String sort,
+                                                      @RequestParam(defaultValue = "ASC") Sort.Direction order,
+                                                      @RequestParam(required = false) String filter
 
     ) {
         return projectsService.getGuestProjects(id, page, perPage, sort, order, filter);
@@ -112,11 +115,11 @@ public void addProjectToInvoice(@RequestBody ProjectToInvoiceInfoRequest request
     @GetMapping("/customerProjects/{id}")
     @Operation(summary = "get customer projects")
     public Page<ProjectInfoResponse> getCustomerProjects(@PathVariable Long id,
-                                                     @RequestParam(defaultValue = "1") Integer page,
-                                                     @RequestParam(defaultValue = "20") Integer perPage,
-                                                     @RequestParam(defaultValue = "dateOfProjects") String sort,
-                                                     @RequestParam(defaultValue = "ASC") Sort.Direction order,
-                                                     @RequestParam(required = false) String filter
+                                                         @RequestParam(defaultValue = "1") Integer page,
+                                                         @RequestParam(defaultValue = "20") Integer perPage,
+                                                         @RequestParam(defaultValue = "dateOfProjects") String sort,
+                                                         @RequestParam(defaultValue = "ASC") Sort.Direction order,
+                                                         @RequestParam(required = false) String filter
 
     ) {
         return projectsService.getCustomerProjects(id, page, perPage, sort, order, filter);
@@ -125,11 +128,11 @@ public void addProjectToInvoice(@RequestBody ProjectToInvoiceInfoRequest request
     @GetMapping("/userProjects/{id}")
     @Operation(summary = "get user projects")
     public Page<ProjectInfoResponse> getUserProjects(@PathVariable Long id,
-                                                   @RequestParam(defaultValue = "1") Integer page,
-                                                   @RequestParam(defaultValue = "20") Integer perPage,
-                                                   @RequestParam(defaultValue = "dateOfProjects") String sort,
-                                                   @RequestParam(defaultValue = "ASC") Sort.Direction order,
-                                                   @RequestParam(required = false) String filter
+                                                     @RequestParam(defaultValue = "1") Integer page,
+                                                     @RequestParam(defaultValue = "20") Integer perPage,
+                                                     @RequestParam(defaultValue = "dateOfProjects") String sort,
+                                                     @RequestParam(defaultValue = "ASC") Sort.Direction order,
+                                                     @RequestParam(required = false) String filter
 
     ) {
         return projectsService.getUserProjects(id, page, perPage, sort, order, filter);
@@ -138,15 +141,16 @@ public void addProjectToInvoice(@RequestBody ProjectToInvoiceInfoRequest request
     @GetMapping("/assistantProjects/{id}")
     @Operation(summary = "get assistant projects")
     public Page<ProjectInfoResponse> getAssistantProjects(@PathVariable Long id,
-                                                     @RequestParam(defaultValue = "1") Integer page,
-                                                     @RequestParam(defaultValue = "15") Integer perPage,
-                                                     @RequestParam(defaultValue = "dateOfProjects") String sort,
-                                                     @RequestParam(defaultValue = "ASC") Sort.Direction order,
-                                                     @RequestParam(required = false) String filter
+                                                          @RequestParam(defaultValue = "1") Integer page,
+                                                          @RequestParam(defaultValue = "15") Integer perPage,
+                                                          @RequestParam(defaultValue = "dateOfProjects") String sort,
+                                                          @RequestParam(defaultValue = "ASC") Sort.Direction order,
+                                                          @RequestParam(required = false) String filter
 
     ) {
         return projectsService.getAssistantProjects(id, page, perPage, sort, order, filter);
     }
+
     @GetMapping("/projectInvoice/{id}")
     @Operation(summary = "get project invoice")
     public InvoiceInfoResponse getProjectInvoice(@PathVariable Long id) {

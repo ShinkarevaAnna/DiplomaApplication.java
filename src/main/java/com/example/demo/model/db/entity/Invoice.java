@@ -1,7 +1,5 @@
 package com.example.demo.model.db.entity;
 
-import com.example.demo.model.db.repository.InvoiceRepository;
-import com.example.demo.model.db.repository.ProjectRepository;
 import com.example.demo.model.enums.InvoiceStatus;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -57,9 +55,6 @@ public class Invoice {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     InvoiceStatus status;
-
-
-
 
 
 }

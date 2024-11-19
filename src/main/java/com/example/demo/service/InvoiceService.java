@@ -2,11 +2,9 @@ package com.example.demo.service;
 
 import com.example.demo.exceptions.CustomException;
 import com.example.demo.model.db.entity.Invoice;
-import com.example.demo.model.db.entity.Project;
 import com.example.demo.model.db.repository.InvoiceRepository;
 import com.example.demo.model.dto.request.InvoiceInfoRequest;
 import com.example.demo.model.dto.response.InvoiceInfoResponse;
-import com.example.demo.model.dto.response.ProjectInfoResponse;
 import com.example.demo.model.enums.InvoiceStatus;
 import com.example.demo.utils.PaginationUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,6 +50,7 @@ public class InvoiceService {
     public Invoice getInvoiceFromDB(Long id) {
         return invoiceRepository.findById(id).orElseThrow(() -> new CustomException("Invoice not found", HttpStatus.NOT_FOUND));
     }
+
     @Transactional
     public InvoiceInfoResponse updateInvoice(Long id, InvoiceInfoRequest request) {
 
@@ -70,6 +69,7 @@ public class InvoiceService {
 
         return mapper.convertValue(save, InvoiceInfoResponse.class);
     }
+
     @Transactional
     public void deleteInvoice(Long id) {
         Invoice invoice = getInvoiceFromDB(id);
@@ -99,7 +99,7 @@ public class InvoiceService {
     }
 
 
-    public void calculateNetProfit(Long id){
+    public void calculateNetProfit(Long id) {
         Invoice invoice = getInvoiceFromDB(id);
         invoice.setNetProfit(invoice.getProjectIncome() - invoice.getAssistantsSalaries() - invoice.getNonReimbursableExpenses());
         invoiceRepository.save(invoice);

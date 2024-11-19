@@ -57,13 +57,12 @@ public class AssistantController {
 
     @GetMapping("/all/{id}")
     @Operation(summary = "Get project assistant list")
-    public Page <AssistantInfoResponse> getProjectAssistants(@PathVariable Long id,
-                                                             @RequestParam(defaultValue = "1") Integer page,
-                                                             @RequestParam(defaultValue = "10") Integer perPage,
-                                                             @RequestParam(defaultValue = "last_name") String sort,
-                                                             @RequestParam(defaultValue = "ASC") Sort.Direction order,
-                                                             @RequestParam(required = false) String filter)
-    {
+    public Page<AssistantInfoResponse> getProjectAssistants(@PathVariable Long id,
+                                                            @RequestParam(defaultValue = "1") Integer page,
+                                                            @RequestParam(defaultValue = "10") Integer perPage,
+                                                            @RequestParam(defaultValue = "last_name") String sort,
+                                                            @RequestParam(defaultValue = "ASC") Sort.Direction order,
+                                                            @RequestParam(required = false) String filter) {
         return assistantService.getProjectAssistants(id, page, perPage, sort, order, filter);
     }
 }

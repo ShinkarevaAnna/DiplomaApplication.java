@@ -24,7 +24,4 @@ public class InvoiceInfoRequest {
     @JsonIgnore
     Integer netProfit;
 
-//    public void setNetProfit(Integer projectIncome, Integer nonReimbursableExpenses, Integer assistantsSalaries) {
-//        this.netProfit = projectIncome - nonReimbursableExpenses - assistantsSalaries;
-//    }
 }

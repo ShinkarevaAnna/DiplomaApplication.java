@@ -7,7 +7,6 @@ import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
 
 @Getter
 @Setter

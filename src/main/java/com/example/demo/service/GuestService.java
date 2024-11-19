@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class GuestService {
     private final ObjectMapper mapper;
     private final GuestRepository guestRepository;
+
     @Transactional
     public GuestInfoResponse createGuest(GuestInfoRequest request) {
 

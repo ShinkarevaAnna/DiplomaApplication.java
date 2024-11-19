@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class CustomerService {
     private final ObjectMapper mapper;
     private final CustomerRepository customerRepository;
+
     @Transactional
     public CustomerInfoResponse createCustomer(CustomerInfoRequest request) {
         Customer customer = mapper.convertValue(request, Customer.class);
@@ -45,6 +46,7 @@ public class CustomerService {
     public Customer getCustomerFromDB(Long id) {
         return customerRepository.findById(id).orElseThrow(() -> new CustomException("Customer not found", HttpStatus.NOT_FOUND));
     }
+
     @Transactional
     public CustomerInfoResponse updateCustomer(Long id, CustomerInfoRequest request) {
 
@@ -62,6 +64,7 @@ public class CustomerService {
 
         return mapper.convertValue(save, CustomerInfoResponse.class);
     }
+
     @Transactional
     public void deleteCustomer(Long id) {
         Customer customer = getCustomerFromDB(id);

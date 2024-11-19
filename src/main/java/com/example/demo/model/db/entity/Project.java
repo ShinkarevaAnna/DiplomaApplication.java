@@ -2,8 +2,6 @@ package com.example.demo.model.db.entity;
 
 import com.example.demo.model.enums.ProjectsStatus;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -21,7 +19,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 

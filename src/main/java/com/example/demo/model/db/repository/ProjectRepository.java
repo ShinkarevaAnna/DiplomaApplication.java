@@ -1,6 +1,5 @@
 package com.example.demo.model.db.repository;
 
-import com.example.demo.model.db.entity.Assistant;
 import com.example.demo.model.db.entity.Project;
 import com.example.demo.model.enums.ProjectsStatus;
 import org.springframework.data.domain.Page;
@@ -10,16 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
-
-    @Query("select c from Project c where c.status <> 'DELETED'")
-    List<Project> findAllNotDeletedProjects();
-
-    @Query("select c from Project c where c.status <> :status")
-    List<Project> findAllProjectsNotInStatus(@Param("status") ProjectsStatus status);
 
     @Query("select c from Project c where c.status <> :status")
     Page<Project> findAllByStatusNot(Pageable request, ProjectsStatus status);
@@ -51,7 +42,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM project p JOIN assistant_projects ap ON p.id = ap.project_id " +
             "JOIN assistant a ON ap.assistant_id = a.id WHERE a.id = :id AND p.status <> :status")
-    Page<Project> findAllAssistantProjectsByStatusNot(@Param("id") Long id, Pageable request,  @Param("status") ProjectsStatus status);
+    Page<Project> findAllAssistantProjectsByStatusNot(@Param("id") Long id, Pageable request, @Param("status") ProjectsStatus status);
 
     @Query(nativeQuery = true, value = "SELECT * FROM project p " +
             "JOIN assistant_projects ap ON p.id = ap.project_id " +
@@ -60,7 +51,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
             "(UPPER(cast(a.name as VARCHAR)) LIKE CONCAT('%', UPPER(:filter), '%') OR " +
             "UPPER(p.date_of_projects) LIKE CONCAT('%', UPPER(:filter), '%') OR " +
             "UPPER(p.object) LIKE CONCAT('%', UPPER(:filter), '%'))")
-    Page<Project> findAllAssistantProjectsByStatusNotFiltered(@Param("assistantId")Long id, Pageable request,  @Param("status") ProjectsStatus status, @Param("filter") String filter);
+    Page<Project> findAllAssistantProjectsByStatusNotFiltered(@Param("assistantId") Long id, Pageable request, @Param("status") ProjectsStatus status, @Param("filter") String filter);
 
 
 }

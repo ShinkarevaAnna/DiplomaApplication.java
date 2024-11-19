@@ -2,12 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.exceptions.CustomException;
 import com.example.demo.model.db.entity.Assistant;
-import com.example.demo.model.db.entity.Project;
 import com.example.demo.model.db.repository.AssistantRepository;
 import com.example.demo.model.dto.request.AssistantInfoRequest;
 import com.example.demo.model.dto.response.AssistantInfoResponse;
 import com.example.demo.model.enums.AssistantStatus;
-import com.example.demo.model.enums.ProjectsStatus;
 import com.example.demo.utils.PaginationUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +48,7 @@ public class AssistantService {
     Assistant getAssistantFromDB(Long id) {
         return assistantRepository.findById(id).orElseThrow(() -> new CustomException("Assistant not found", HttpStatus.NOT_FOUND));
     }
+
     @Transactional
     public AssistantInfoResponse updateAssistant(Long id, AssistantInfoRequest request) {
 
@@ -69,6 +68,7 @@ public class AssistantService {
 
         return mapper.convertValue(save, AssistantInfoResponse.class);
     }
+
     @Transactional
     public void deleteAssistant(Long id) {
         Assistant assistant = getAssistantFromDB(id);
@@ -114,7 +114,8 @@ public class AssistantService {
 
         return new PageImpl<>(content, pageRequest, projectAssistant.getTotalElements());
     }
-    public List<Assistant> getProjectAssistantsWithoutPagination(Long id){
+
+    public List<Assistant> getProjectAssistantsWithoutPagination(Long id) {
         return assistantRepository.findAllProjectAssistantsWithoutPagination(id);
 
     }

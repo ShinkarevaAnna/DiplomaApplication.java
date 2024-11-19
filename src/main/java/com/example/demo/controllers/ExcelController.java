@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.example.demo.constants.Constants.EXCEL;
@@ -25,7 +24,7 @@ import static com.example.demo.constants.Constants.EXCEL;
 @RequestMapping(EXCEL)
 @RequiredArgsConstructor
 public class ExcelController {
-private final ExcelService excelService;
+    private final ExcelService excelService;
 
     private static ResponseEntity<Resource> getFileResponse(ReportFile reportFile) {
         return ResponseEntity.ok()
@@ -38,7 +37,7 @@ private final ExcelService excelService;
     @Operation(summary = "download excel project")
     public ResponseEntity<Resource> downloadProjectByIdAsExcel(@PathVariable Long projectId) throws IOException {
 
-       return getFileResponse(excelService.downloadProjectByIdAsExcel(projectId));
+        return getFileResponse(excelService.downloadProjectByIdAsExcel(projectId));
 
     }
 }

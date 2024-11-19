@@ -7,7 +7,6 @@ import com.example.demo.model.db.repository.AssistantRepository;
 import com.example.demo.model.dto.request.AssistantInfoRequest;
 import com.example.demo.model.dto.response.AssistantInfoResponse;
 import com.example.demo.model.enums.AssistantStatus;
-import com.example.demo.model.enums.ProjectsStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +16,6 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +27,6 @@ import static org.mockito.Mockito.*;
 public class AssistantServiceTest {
     @InjectMocks
     private AssistantService assistantService;
-    @Mock
-    private ProjectsService projectsService;
 
     @Mock
     private AssistantRepository assistantRepository;
@@ -167,11 +163,6 @@ public class AssistantServiceTest {
         Project project = new Project();
         project.setId(1L);
         List<Assistant> assistants = List.of(assistant, assistant1);
-//        List<AssistantInfoResponse> assistantInfoResponse = new ArrayList<>();
-//        for (Assistant as : assistants) {
-//            AssistantInfoResponse infoResponse = mapper.convertValue(as, AssistantInfoResponse.class);
-//            assistantInfoResponse.add(infoResponse);
-//        }
         when(assistantRepository.findAllProjectAssistantsWithoutPagination(project.getId())).thenReturn(assistants);
         project.setAssistants(assistants);
         List<Assistant> result = assistantService.getProjectAssistantsWithoutPagination(project.getId());

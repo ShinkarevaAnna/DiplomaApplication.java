@@ -1,7 +1,6 @@
 package com.example.demo.model.db.entity;
 
 import com.example.demo.model.enums.UserStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
